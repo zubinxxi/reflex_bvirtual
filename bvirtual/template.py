@@ -36,7 +36,6 @@ def template(
                 rx.box(
                     page(), # funcion que renderiza la pagina                  
                     height="100vh",
-                    #margin_top="20px",
                     border_radius="10px",
                 ),
                 padding_x="10px",
