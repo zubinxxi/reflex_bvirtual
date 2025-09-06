@@ -5,7 +5,8 @@ import reflex as rx
 import reflex_local_auth
 from rxconfig import config
 
-
+# APIs
+from bvirtual.apis import users_api
 
 # Models
 from bvirtual.models.auth import auth_models

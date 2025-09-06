@@ -1,2 +1,5 @@
 
 reflex==0.8.9
+reflex-local-auth
+mysqlclient
+python-dotenv
