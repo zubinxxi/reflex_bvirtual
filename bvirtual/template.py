@@ -19,8 +19,7 @@ def template(
                     rx.box(
                         page(), # funcion que renderiza la pagina
                         height="90vh",
-                        #margin_top="20px",
-                        #border_radius="10px",
+                        overflow_y="auto",
                     ),
                     padding_x="20px",
                 ),
