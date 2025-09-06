@@ -5,6 +5,7 @@ __pycache__/
 assets/external/
 *.py[cod]
 .venv
+.venv/
 venv/
 .env
 
