@@ -1,0 +1,21 @@
+.states
+__pycache__/
+*.db
+.web
+assets/external/
+*.py[cod]
+.venv
+venv/
+.env
+
+# Archivos del sistema operativo
+.DS_Store
+Thumbs.db
+
+# Archivos de IDE
+.vscode/
+.idea/
+
+# Archivos de log
+*.log
+
