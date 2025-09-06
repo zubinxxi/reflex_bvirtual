@@ -5,6 +5,9 @@ from bvirtual.states.state import MyLocalAuthState
 from bvirtual.states.users.users_state import UserInfoState
 from bvirtual.models.auth.auth_models import UserInfo
 
+# paginado
+from bvirtual.components.pagination.pagination import pagination_controls
+
 from bvirtual.components.users.btn_add_user import add_user_button
 from bvirtual.components.users.btn_edit_user import edit_user_button
 from bvirtual.components.users.btn_del_user import delete_user_button
@@ -108,53 +111,13 @@ def loading_table_users() -> rx.Component:
             width="100%",
         ),
 
-        rx.hstack(
-            rx.hstack(
-                rx.text("Ver"),
-                rx.select(
-                    ["5", "10", "25", "50"],
-                    default_value = "10",
-                    on_change = lambda value: UserInfoState.set_limit(value),
-                    size="1",
-                    width="70px",
-                ),
-                rx.text("entradas"),
-                width="20%",
-                align="center",
-                justify="start",
-            ),
-
-            rx.hstack(
-                rx.button(
-                    "Anterior",
-                    on_click=UserInfoState.prev_page,
-                    variant="surface",
-                    size="1",
-                ),
-                rx.text(
-                    f"Page {UserInfoState.page_number} / {UserInfoState.total_pages}"
-                ),
-                rx.button(
-                    "Siguiente",
-                    on_click=UserInfoState.next_page,
-                    variant="surface",
-                    size="1",
-                ),
-                width="60%",
-                align="center",
-                justify="center",
-            ),
-            
-            rx.hstack(
-                rx.text(f"Total de usuarios: {UserInfoState.total_items}"),
-                width="20%",
-                align="center",
-                justify="end",
-            ),
-
-            width="100%",
-            align="center",
-            justify="between",
+        pagination_controls(
+            UserInfoState.set_limit, 
+            UserInfoState.prev_page, 
+            UserInfoState.page_number, 
+            UserInfoState.total_pages, 
+            UserInfoState.next_page, 
+            UserInfoState.total_items
         ),
         overflow_y="auto",
 
