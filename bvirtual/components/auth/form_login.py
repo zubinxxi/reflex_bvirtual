@@ -8,7 +8,7 @@ def login_error() -> rx.Component:
     return rx.cond(
         reflex_local_auth.LoginState.error_message != "",
         rx.callout(
-            reflex_local_auth.LoginState.error_message,
+            "Usuaorio o contraseña incorrectos",#reflex_local_auth.LoginState.error_message,
             icon="triangle_alert",
             color_scheme="red",
             role="alert",
