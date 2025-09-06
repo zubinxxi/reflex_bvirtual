@@ -16,9 +16,8 @@ class GroupsState(rx.State):
     #Paginado
     total_items: int
     offset: int = 0
-    limit: int = 10  # Número de usuarios por página
-
-    
+    limit: int = 10  # Número de grupos por página
+        
     
     # Función para manejar la búsqueda
     @rx.event
@@ -65,7 +64,7 @@ class GroupsState(rx.State):
     def set_limit(self, limit: str):
         """Set the number of items per page."""
         self.limit = int(limit)
-        #self.offset = 0  # Reset to the first page
+        self.offset = 0  # Reset to the first page
         self.list_groups()
 
     # Listar Usuarios

@@ -69,7 +69,7 @@ class UserInfoState(reflex_local_auth.RegistrationState):
     def set_limit(self, limit: str):
         """Set the number of items per page."""
         self.limit = int(limit)
-        #self.offset = 0  # Reset to the first page
+        self.offset = 0  # Reset to the first page
         self.list_users()
 
     # Listar Usuarios
