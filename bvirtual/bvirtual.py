@@ -1,47 +1,38 @@
 """Welcome to Reflex! This file outlines the steps to create a basic app."""
 
+from typing import Callable
 import reflex as rx
-
+import reflex_local_auth
 from rxconfig import config
 
-import reflex_local_auth
+
+
+# Models
+from bvirtual.models.auth import auth_models
+from bvirtual.models.auth.auth_models import UserInfo
+
+# State
+#from biblioteca.state import MyLocalAuthState
+
+# Pages
+from bvirtual.pages.index import index
+from bvirtual.pages.login_page import login
+from bvirtual.pages.users_page import users    
 
 class State(rx.State):
     """The app state."""
 
-@reflex_local_auth.require_login
-def index() -> rx.Component:
-    # Welcome Page (Index)
-    return rx.container(
-        rx.color_mode.button(position="top-right"),
-        rx.vstack(
-            rx.heading("Welcome to Reflex!", size="9"),
-            rx.text(
-                "Get started by editing ",
-                rx.code(f"{config.app_name}/{config.app_name}.py"),
-                size="5",
-            ),
-            rx.link(
-                rx.button("Check out our docs!"),
-                href="https://reflex.dev/docs/getting-started/introduction/",
-                is_external=True,
-            ),
-            spacing="5",
-            justify="center",
-            min_height="85vh",
-        ),
-    )
 
+        
 
-app = rx.App()
-app.add_page(index)
-app.add_page(
-    reflex_local_auth.pages.login_page,
-    route=reflex_local_auth.routes.LOGIN_ROUTE,
-    title="Login",
-)
-app.add_page(
-    reflex_local_auth.pages.register_page,
-    route=reflex_local_auth.routes.REGISTER_ROUTE,
-    title="Register",
+app = rx.App(
+    theme=rx.theme( 
+        has_background=True, 
+        radius="small", 
+        accent_color="cyan",
+    ),
+    stylesheets=[
+        "https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css",
+        "https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Raleway:ital,wght@0,100..900;1,100..900&family=Staatliches&display=swap",
+    ],
 )
