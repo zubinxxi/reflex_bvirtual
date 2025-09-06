@@ -18,7 +18,7 @@ def template(
                     header('Biblioteca Virtual'),
                     rx.box(
                         page(), # funcion que renderiza la pagina
-                        height="90vh",
+                        height="92vh",
                         overflow_y="auto",
                     ),
                     padding_x="20px",
