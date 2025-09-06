@@ -1,7 +1,7 @@
 import reflex as rx
 
 config = rx.Config(
-    app_name="bvirtual.bvirtual",
+    app_name="bvirtual",
     db_url="mysql+mysqldb://bvirtual:1234567.@localhost/bvirtual",
     api_url="http://localhost:8000",
     plugins=[
