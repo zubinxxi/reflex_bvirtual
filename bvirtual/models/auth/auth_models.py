@@ -10,7 +10,7 @@ import reflex_local_auth   # Importing LocalUser model for user management
 
 class User_Role(rx.Model, table=True): 
     id: int = Field(default=None, primary_key=True)
-    name: str = Field(nullable=False)  # Role name, e.g., 'admin', 'user'
+    name: str = Field(unique=True, nullable=False)  # Role name, e.g., 'admin', 'user'
     description: str = Field(nullable=True)  # Optional description of the role
 
     userinfo: List["UserInfo"] = Relationship(back_populates="user_role")  # Relationship to UserInfo model

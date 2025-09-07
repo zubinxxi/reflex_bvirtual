@@ -6,8 +6,11 @@ from bvirtual.states.groups.groups_state import GroupsState
 # Modelo
 from bvirtual.models.auth.auth_models import User_Role
 
-# paginado
+# componentes
 from bvirtual.components.pagination.pagination import pagination_controls
+from bvirtual.components.groups.btn_add_group import add_group_button
+from bvirtual.components.groups.btn_edit_group import edit_user_button
+from bvirtual.components.groups.btn_del_group import delete_group_button
 
 def show_groups(index: int, group: User_Role) -> rx.Component:
     
@@ -19,22 +22,12 @@ def show_groups(index: int, group: User_Role) -> rx.Component:
             rx.hstack(
                 # Aquí puedes agregar botones o acciones específicas para cada grupo
                 rx.tooltip(
-                    rx.button(
-                        rx.icon("pencil", size=18),
-                        color_scheme="cyan",
-                        variant="surface",
-                        size="1",
-                    ),
+                    edit_user_button(group),
                     content="Editar Grupo",
                     side="bottom",
                 ),
                 rx.tooltip(
-                    rx.button(
-                        rx.icon("trash", size=18),
-                        color_scheme="red",
-                        variant="surface",
-                        size="1",
-                    ),
+                    delete_group_button(group),
                     content="Eliminar Grupo",
                     side="bottom",
                 ),
@@ -53,20 +46,9 @@ def loading_table_groups() -> rx.Component:
                     placeholder="Buscar grupos...",
                     on_change=lambda value: GroupsState.set_search(value),
                 ),
-                #add_user_button(),
-                rx.button(
-                    rx.tooltip(
-                        rx.hstack(
-                            rx.icon("plus", size=18),
-                            rx.text("Nuevo", size="4"),
-                            align="center",
-                            justify="center",
-                        ),
-                        content="Crear Grupo",
-                    ),
-                    color_scheme="cyan",
-                    variant="surface",
-                ),
+                
+                add_group_button(),
+                
                 direction="row",
                 justify="between",
                 width="100%",
