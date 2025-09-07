@@ -16,7 +16,8 @@ from bvirtual.models.auth.auth_models import UserInfo
 from bvirtual.pages.index import index
 from bvirtual.pages.login_page import login
 from bvirtual.pages.users_page import users    
-from bvirtual.pages.groups_page import grupos    
+from bvirtual.pages.groups_page import grupos   
+from bvirtual.pages.change_password_page import change_password 
 
 class State(rx.State):
     """The app state."""

@@ -118,6 +118,13 @@ def settings_items() -> rx.Component:
                     trim="both",
                     width="100%",
                 ),
+                rx.link(
+                    rx.hstack(rx.icon("key-round"), rx.text("Cambiar Contraseña"), align="center", justify="start"),
+                    href="/cambiar-password",    
+                    underline="none",
+                    trim="both",
+                    width="100%",
+                ),
                 spacing="5",
             ),
         ),
