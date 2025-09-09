@@ -1,3 +1,4 @@
+import re
 from typing import Any
 import reflex as rx 
 from sqlmodel import select
@@ -14,8 +15,24 @@ class ChangePassword(reflex_local_auth.LocalAuthState):
     old_password: str
     new_password: str
     confirm_password: str
- 
 
+    #función para validar la nueva contraseña
+    def validate_new_password(self, new_password: str, confirm_password: str):
+        if new_password != confirm_password:
+            return rx.toast.error("Las nuevas contraseñas no coinciden.", duration="5000", position="top-center")
+        if len(new_password) < 8:
+            return rx.toast.error("La nueva contraseña debe tener al menos 8 caracteres.", duration="5000", position="top-center")
+        if not re.search(r"[A-Z]", new_password):
+            return rx.toast.error("La nueva contraseña debe tener al menos una mayúscula.", duration="5000", position="top-center")
+        if not re.search(r"[a-z]", new_password):
+            return rx.toast.error("La nueva contraseña debe tener al menos una minúscula.", duration="5000", position="top-center")
+        if not re.search(r"\d", new_password):
+            return rx.toast.error("La nueva contraseña debe tener al menos un número.", duration="5000", position="top-center")
+        if not re.search(r"[!@#$%^&*(),.?\":{}|<>]", new_password):
+            return rx.toast.error("La nueva contraseña debe tener al menos un carácter especial.", duration="5000", position="top-center")
+        
+        return None # Retorna None si las validaciones son exitosas
+ 
     @rx.event
     def handle_submit(self, form_data: dict[str, Any]):
 
@@ -24,18 +41,10 @@ class ChangePassword(reflex_local_auth.LocalAuthState):
         self.new_password = form_data["new_password"]
         self.confirm_password = form_data["confirm_password"]
 
-        # Validaciones
-        if self.new_password != self.confirm_password:
-            yield rx.toast.error("Las nuevas contraseñas no coinciden.", duration="5000", position="top-center")
-            return
-
-        if len(self.new_password) < 8:
-            yield rx.toast.error("La nueva contraseña debe tener al menos 8 caracteres.", duration="5000", position="top-center")
-            return
-
-        # Verifica si el usuario está autenticado
-        if not self.is_authenticated:
-            yield rx.toast.error("Debes iniciar sesión para cambiar tu contraseña.", duration="5000", position="top-center")
+        # Validar las nuevas contraseñas y capturar el resultado
+        validation_result = self.validate_new_password(self.new_password, self.confirm_password)
+        if validation_result:
+            yield validation_result
             return
 
         # Lógica para cambiar la contraseña
