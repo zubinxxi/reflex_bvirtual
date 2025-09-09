@@ -23,7 +23,7 @@ def form_forgot_password() -> rx.Component:
                             name="email",
                             variant="soft",
                             width="100%",
-
+                            auto_focus=True,
                         ),
                         rx.button(
                             "Restablecer",
