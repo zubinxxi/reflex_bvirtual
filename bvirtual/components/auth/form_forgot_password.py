@@ -6,7 +6,7 @@ def form_forgot_password() -> rx.Component:
         rx.desktop_only(
             rx.vstack(
                 rx.image(
-                    src="/img/logo.png",
+                    src="/img/logo01.png",
                     width="auto",
                     height="auto",
                 ),

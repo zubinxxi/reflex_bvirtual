@@ -18,6 +18,7 @@ def edit_user_button(user: UserInfo) -> rx.Component:
                 color_scheme="blue",
                 variant="surface",
                 size="1",
+                on_click=lambda: EditUserState.get_userinfo(user),
             ),
             
         ),

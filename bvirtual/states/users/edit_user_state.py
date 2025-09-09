@@ -11,6 +11,7 @@ from bvirtual.states.users.users_state import UserInfoState
 class EditUserState(rx.State):
     """State for editing an existing user."""
 
+    current_userinfo: UserInfo = UserInfo()
     role_name: str = ""  # El nombre del rol seleccionado
     all_role_names: list[str] = []  # Lista de nombres de roles
 
@@ -25,6 +26,11 @@ class EditUserState(rx.State):
     @rx.event
     def set_role_name(self, role: str):
         self.role_name = role
+
+    #Función que trae los datos de un grupo
+    @rx.event
+    def get_userinfo(self, user: UserInfo):
+        self.current_userinfo = user
          
     @rx.event
     def handle_submit(self, form_data: dict[str, Any]):
@@ -56,12 +62,24 @@ class EditUserState(rx.State):
                 user_info = session.exec(
                     select(UserInfo)
                     .options(joinedload(UserInfo.localuser), joinedload(UserInfo.user_role))
-                    .where(UserInfo.email == form_data['email'])
+                    .where(UserInfo.id == self.current_userinfo.id)
                 ).one_or_none()
 
                 if not user_info:
                     yield rx.toast.error("Usuario no encontrado.", duration=5000, position="top-center")
                     return
+                
+                # Validamos que en la db no exista la cuenta de correo que viene en el form_data
+                user = session.exec(
+                    select(UserInfo)
+                    .options(joinedload(UserInfo.localuser), joinedload(UserInfo.user_role))
+                    .where(UserInfo.email == form_data['email'])
+                ).first()
+                
+                if user.email:
+                    if user.localuser.username != form_data['username']:
+                        yield rx.toast.error("El correo ya existe en el sistema", duration=5000, position="top-center",)
+                        return
 
                 # Actualiza los campos del usuario
                 user_info.name = form_data['name']
