@@ -59,7 +59,7 @@ class ChangePassword(reflex_local_auth.LocalAuthState):
                     yield rx.toast.error("Usuario no encontrado.", duration="5000", position="top-center")
                     return
                 
-                # Usa el método `verify()` de la instancia del usuario para verificar la contraseñ
+                # Usa el método `verify()` de la instancia del usuario para verificar la contraseña
                 if not current_user or not current_user.verify(self.old_password):
                     yield rx.toast.error("La contraseña actual es incorrecta", duration="5000", position="top-center")
                     return
