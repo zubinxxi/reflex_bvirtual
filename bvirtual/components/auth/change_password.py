@@ -6,10 +6,9 @@ from bvirtual.states.auth.change_password_state import ChangePassword
 
 def change_password() -> rx.Component:
     return rx.center(
-        rx.box(
+        rx.card(
             rx.form(
                 rx.vstack(
-                    rx.heading("Cambiar Contraseña", size="5"),
                     rx.text("Ingresa tu contraseña actual y la nueva contraseña.", color="gray"),
                     
                     rx.input(
