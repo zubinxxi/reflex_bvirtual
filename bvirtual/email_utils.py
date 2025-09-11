@@ -45,11 +45,11 @@ def send_password_reset_email(to_email: str, new_password: str):
 
         # Conéctate al servidor SMTP
         server = smtplib.SMTP(SMTP_HOST, SMTP_PORT)
-        server.set_debuglevel(1)  # Habilita el modo de depuración para ver la comunicación
+        #server.set_debuglevel(1)  # Habilita el modo de depuración para ver la comunicación
 
-        server.ehlo()  # Identifica el cliente al servidor
+        #server.ehlo()  # Identifica el cliente al servidor
         server.starttls() # Actualiza la conexión a TLS
-        server.ehlo() # Vuelve a identificar el cliente después de la actualización
+        #server.ehlo() # Vuelve a identificar el cliente después de la actualización
 
         
         server.login(SENDER_EMAIL, SENDER_PASSWORD)

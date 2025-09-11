@@ -3,6 +3,8 @@ import reflex as rx
 # State
 from bvirtual.states.auth.forgot_password_state import ForgotPasswordState
 
+# Components
+from bvirtual.components.utils.messages import alert_success
 
 def form_forgot_password() -> rx.Component: 
     return rx.box(
@@ -14,19 +16,31 @@ def form_forgot_password() -> rx.Component:
                     height="auto",
                 ),
                 rx.heading(
-                    "Por favor ingresa tu correo",
+                    "Por favor ingresa tu cuenta de usurio",
                     size="4",
                 ),
 
                 rx.form(
                     rx.vstack(
                         rx.cond(
-                            ForgotPasswordState.error_message != "",
-                            rx.text(ForgotPasswordState.error_message, color="red"),
+                            ForgotPasswordState.show_error_alert,
+                            alert_success(
+                                title="Correo Enviado", 
+                                message=ForgotPasswordState.error_message,
+                                is_open=ForgotPasswordState.show_error_alert,
+                                on_ok_click=ForgotPasswordState.set_show_error_alert(value=False)
+                            ),
+                            "",
                         ),
                         rx.cond(
-                            ForgotPasswordState.success_message != "",
-                            rx.text(ForgotPasswordState.success_message, color="green"),
+                            ForgotPasswordState.show_success_alert,
+                            alert_success(
+                                title="Correo Enviado", 
+                                message=ForgotPasswordState.success_message,
+                                is_open=ForgotPasswordState.show_success_alert,
+                                on_ok_click=ForgotPasswordState.set_show_success_alert(value=False)
+                            ),
+                            "",
                         ),
                         rx.input(
                             rx.input.slot(rx.icon("user")),
@@ -72,7 +86,7 @@ def form_forgot_password() -> rx.Component:
                     height="auto",
                 ),
                 rx.heading(
-                    "Por favor ingresa tu correo",
+                    "Por favor ingresa tu cuenta de usurio",
                     size="4",
                 ),
 

@@ -12,12 +12,25 @@ from bvirtual.email_utils import send_password_reset_email
 from reflex_local_auth.user import LocalUser
 from bvirtual.models.auth.auth_models import UserInfo
 
+# Components
+from bvirtual.components.utils.messages import alert_success
+
 class ForgotPasswordState(rx.State):
     """Estado para manejar la recuperación de contraseña"""
 
     #ser_name: str
     error_message: str = ""
     success_message: str = ""
+    show_success_alert: bool = False
+    show_error_alert: bool = False
+
+    @rx.event
+    def set_show_success_alert(self, value: bool):
+        self.show_success_alert = value
+
+    @rx.event
+    def set_show_error_alert(self, value: bool):
+        self.show_error_alert = value
 
     def generate_random_password(self, length: int = 12) -> str:
         """Genera una contraseña aleatoria y segura."""
@@ -36,8 +49,9 @@ class ForgotPasswordState(rx.State):
 
         if not username:
             self.error_message = "Por favor, ingresa tu usuario."
+            yield rx.toast.error(self.error_message, duration="5000", position="top-center")
             return
-
+        
         with rx.session() as session:
             # 1. Buscar al usuario por el nombre de usuario.
             user = session.exec(
@@ -46,6 +60,7 @@ class ForgotPasswordState(rx.State):
 
             if not user:
                 self.error_message = "No se encontró el usuario. Revisa que esté escrito correctamente."
+                yield rx.toast.error(self.error_message, duration="5000", position="top-center")
                 return
 
             # 2. Buscar la información adicional del usuario para obtener el email.
@@ -55,6 +70,7 @@ class ForgotPasswordState(rx.State):
             
             if not user_info or not user_info.email:
                 self.error_message = "No se pudo encontrar un correo asociado a tu cuenta."
+                yield rx.toast.error(self.error_message, duration="5000", position="top-center")
                 return
 
             # 3. Generar una nueva contraseña y actualizar el modelo LocalUser.
@@ -66,5 +82,7 @@ class ForgotPasswordState(rx.State):
             # 4. Enviar el correo electrónico con la nueva contraseña.
             if send_password_reset_email(user_info.email, new_password):
                 self.success_message = "Se ha enviado un correo con tu nueva contraseña. Revisa tu bandeja de entrada."
+                self.show_success_alert = True # <--- Cambia el estado de la alerta
             else:
                 self.error_message = "Hubo un error al enviar el correo. Por favor, intenta de nuevo más tarde."
+                self.show_error_alert = True # <--- Cambia el estado de la alerta
