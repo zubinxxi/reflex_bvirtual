@@ -6,6 +6,14 @@ from bvirtual.states.auth.forgot_password_state import ForgotPasswordState
 # Components
 from bvirtual.components.utils.messages import alert_success
 
+# Para ejecutar las alertas,
+# Primero: debes crear las variables de estado de tipo bool
+#          en los estados donde quieres que se utilicen.
+# Segundo: en los formularios donde se ejecutaran, debes agregar
+#          los condicionales para que llamen a la función con los
+#          parámetros correctos
+#
+
 def form_forgot_password() -> rx.Component: 
     return rx.box(
         rx.desktop_only(
