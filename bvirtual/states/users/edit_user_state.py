@@ -56,19 +56,7 @@ class EditUserState(rx.State):
             return
       
         try:
-
             with rx.session() as session:
-                # Carga el usuario a editar
-                user_info = session.exec(
-                    select(UserInfo)
-                    .options(joinedload(UserInfo.localuser), joinedload(UserInfo.user_role))
-                    .where(UserInfo.id == self.current_userinfo.id)
-                ).one_or_none()
-
-                if not user_info:
-                    yield rx.toast.error("Usuario no encontrado.", duration=5000, position="top-center")
-                    return
-                
                 # Validamos que en la db no exista la cuenta de correo que viene en el form_data
                 user = session.exec(
                     select(UserInfo)
@@ -76,10 +64,27 @@ class EditUserState(rx.State):
                     .where(UserInfo.email == form_data['email'])
                 ).first()
                 
-                if user.email:
+                if user:
                     if user.localuser.username != form_data['username']:
                         yield rx.toast.error("El correo ya existe en el sistema", duration=5000, position="top-center",)
                         return
+
+            with rx.session() as session:
+                # Carga el usuario a editar
+                user_info = session.exec(
+                    select(UserInfo)
+                    .options(
+                        joinedload(UserInfo.localuser), 
+                        joinedload(UserInfo.user_role)
+                    )
+                    .where(UserInfo.id == self.current_userinfo.id)
+                ).one_or_none()
+
+                if not user_info:
+                    yield rx.toast.error("Usuario no encontrado.", duration=5000, position="top-center")
+                    return
+                
+                
 
                 # Actualiza los campos del usuario
                 user_info.name = form_data['name']
@@ -95,6 +100,7 @@ class EditUserState(rx.State):
 
                 session.add(user_info)
                 session.commit()
+                session.refresh(user_info)
 
             # Recarga la lista de usuarios en UserInfoState
             yield UserInfoState.list_users()

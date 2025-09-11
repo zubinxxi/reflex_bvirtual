@@ -1,5 +1,8 @@
 import reflex as rx
 
+# State
+from bvirtual.states.auth.forgot_password_state import ForgotPasswordState
+
 
 def form_forgot_password() -> rx.Component: 
     return rx.box(
@@ -17,10 +20,18 @@ def form_forgot_password() -> rx.Component:
 
                 rx.form(
                     rx.vstack(
+                        rx.cond(
+                            ForgotPasswordState.error_message != "",
+                            rx.text(ForgotPasswordState.error_message, color="red"),
+                        ),
+                        rx.cond(
+                            ForgotPasswordState.success_message != "",
+                            rx.text(ForgotPasswordState.success_message, color="green"),
+                        ),
                         rx.input(
-                            rx.input.slot(rx.icon("mail")),
-                            placeholder="Email",
-                            name="email",
+                            rx.input.slot(rx.icon("user")),
+                            placeholder="Usuario",
+                            name="username",
                             variant="soft",
                             width="100%",
                             auto_focus=True,
@@ -41,6 +52,8 @@ def form_forgot_password() -> rx.Component:
 
                         spacing="5",
                     ),
+                    on_submit=ForgotPasswordState.handle_submit,
+                    reset_on_submit=True,
                 ),
 
                 height="100vh",
@@ -54,7 +67,7 @@ def form_forgot_password() -> rx.Component:
         rx.mobile_and_tablet(
             rx.vstack(
                 rx.image(
-                    src="/img/logo.png",
+                    src="/img/logo01.png",
                     width="auto",
                     height="auto",
                 ),
@@ -66,11 +79,12 @@ def form_forgot_password() -> rx.Component:
                 rx.form(
                     rx.vstack(
                         rx.input(
-                            placeholder="Email",
-                            name="email",
+                            rx.input.slot(rx.icon("user")),
+                            placeholder="Usuario",
+                            name="username",
                             variant="soft",
                             width="100%",
-
+                            auto_focus=True,
                         ),
                         rx.button(
                             "Iniciar Sesión",
@@ -94,6 +108,8 @@ def form_forgot_password() -> rx.Component:
                         ),
                         spacing="5",
                     ),
+                    on_submit=ForgotPasswordState.handle_submit,
+                    reset_on_submit=True,
                 ),
 
                 justify="start",

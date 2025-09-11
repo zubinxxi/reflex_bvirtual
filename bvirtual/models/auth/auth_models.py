@@ -24,7 +24,7 @@ class UserInfo(rx.Model, table=True):
     user_id: int = Field(foreign_key="localuser.id", ondelete="CASCADE")  # Foreign key to the User model
     role_id: int = Field(foreign_key="user_role.id")  # Foreign key to the Role model
     name: str = Field(nullable=True)  # Optional name field
-    email: str = Field(unique=True, index=True)  # Unique email address
+    email: str = Field(unique=False, index=True)  # Unique email address
     phone: str = Field(nullable=True)  # Optional phone number
     is_admin: bool = False # Default to False, can be set to True for admin users
 
