@@ -7,10 +7,9 @@ from bvirtual.states.auth.forgot_password_state import ForgotPasswordState
 from bvirtual.components.utils.messages import alert_success
 
 # Para ejecutar las alertas,
-# Primero: debes crear las variables de estado de tipo bool
+# Primero: debes crear las variables de estado de tipo bool y las de str para el texto del mensaje
 #          en los estados donde quieres que se utilicen.
-# Segundo: en los formularios donde se ejecutaran, debes agregar
-#          los condicionales para que llamen a la función con los
+# Segundo: en los formularios donde se ejecutaran, debes agregar los condicionales para que llamen a la función con los
 #          parámetros correctos
 #
 
