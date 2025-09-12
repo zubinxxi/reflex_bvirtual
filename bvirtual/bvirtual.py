@@ -8,6 +8,9 @@ from rxconfig import config
 # Models
 from bvirtual.models.auth import auth_models
 from bvirtual.models.auth.auth_models import UserInfo
+from bvirtual.models.categorys.categorys_models import Categorys
+from bvirtual.models.shelves.shelves_models import Shelves
+from bvirtual.models.documents.document_models import Documents
 
 # State
 #from biblioteca.state import MyLocalAuthState
