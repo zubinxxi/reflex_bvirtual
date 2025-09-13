@@ -22,6 +22,9 @@ from bvirtual.pages.forgot_password_page import forgot_password
 from bvirtual.pages.users_page import users    
 from bvirtual.pages.groups_page import grupos   
 from bvirtual.pages.change_password_page import change_password 
+from bvirtual.pages.categorys_page import categorys
+from bvirtual.pages.shelves_page import shelves
+from bvirtual.pages.documents_page import documents
 
 class State(rx.State):
     """The app state."""
