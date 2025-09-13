@@ -18,19 +18,18 @@ class AddGroupState(rx.State):
 
         self.name = form_data["name"]
         self.description = form_data["description"]  
-
-        """Validaciones"""
-        if self.name == "":
-            yield rx.toast.error('El nombre esrequerido', duration="5000", position="top-center")
-            return
-        
-        if self.description == "":
-            yield rx.toast.error('La descripción es requerida', duration="5000", position="top-center")
-            return
-            
     
         try:
             with rx.session() as session:
+
+                """Validaciones"""
+                if self.name == "":
+                    yield rx.toast.error('El nombre esrequerido', duration="5000", position="top-center")
+                    return
+                
+                if self.description == "":
+                    yield rx.toast.error('La descripción es requerida', duration="5000", position="top-center")
+                    return
 
                 group = session.exec(select(User_Role).where(User_Role.name == self.name)).first()
 
@@ -46,11 +45,11 @@ class AddGroupState(rx.State):
                     )
                 )
                 session.commit()
-            yield GroupsState.list_groups()
-            yield rx.toast.success(f"Grupo \"{self.name.upper()}\" creado con ¡ÉXITO!", duration=5000, position="top-right")
+                yield GroupsState.list_groups()
+                yield rx.toast.success(f"Grupo \"{self.name.upper()}\" creado con ¡ÉXITO!", duration=5000, position="top-right")
 
-            self.name = ""
-            self.description = ""
+                self.name = ""
+                self.description = ""
 
         except Exception as e:
             print("Error:", str(e))
