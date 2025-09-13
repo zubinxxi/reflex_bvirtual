@@ -3,9 +3,11 @@ import reflex as rx
 # State
 from bvirtual.states.state import MyLocalAuthState
 from bvirtual.states.users.users_state import UserInfoState
+
+# models
 from bvirtual.models.auth.auth_models import UserInfo
 
-# paginado
+# paginate
 from bvirtual.components.pagination.pagination import pagination_controls
 
 from bvirtual.components.users.btn_add_user import add_user_button
