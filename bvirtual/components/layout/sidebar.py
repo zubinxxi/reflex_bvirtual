@@ -82,6 +82,13 @@ def sidebar_items() -> rx.Component:
                         trim="both",
                         width="100%",
                     ),
+                    rx.link(
+                        rx.hstack(rx.icon("files"), rx.text("Documentos"), align="center", justify="start"),
+                        href="/documentos",    
+                        underline="none",
+                        trim="both",
+                        width="100%",
+                    ),
                     spacing="5",
                 ),
             ),
