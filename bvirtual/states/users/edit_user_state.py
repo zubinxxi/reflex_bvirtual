@@ -48,12 +48,12 @@ class EditUserState(rx.State):
 
         # Validaciones
         if not form_data['name']:
-            yield rx.toast.error("El nombre de usuario no puede estar vacio", duration=5000, position="top-center",)
-            return
+            return rx.toast.error("El nombre de usuario no puede estar vacio", duration=5000, position="top-center",)
+            
 
         if not form_data['email']:
-            yield rx.toast.error("El correo no puede estar vacio", duration=5000, position="top-center",)
-            return
+            return rx.toast.error("El correo no puede estar vacio", duration=5000, position="top-center",)
+            
       
         try:
             with rx.session() as session:
@@ -102,9 +102,9 @@ class EditUserState(rx.State):
                 session.commit()
                 session.refresh(user_info)
 
-            # Recarga la lista de usuarios en UserInfoState
-            yield UserInfoState.list_users()
-            yield rx.toast.success("Usuario actualizado con éxito.", duration=5000, position="top-right")
+                # Recarga la lista de usuarios en UserInfoState
+                yield UserInfoState.list_users()
+                yield rx.toast.success("Usuario actualizado con éxito.", duration=5000, position="top-right")
             
         except Exception as e:
             print("Error updating user:", e)

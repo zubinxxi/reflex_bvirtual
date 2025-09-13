@@ -22,8 +22,8 @@ class DeleteUserState(rx.State):
                 session.delete(user_to_delete)
                 session.commit()
 
-            yield UserInfoState.list_users()
-            yield rx.toast.success(f"Usuario \"{user.name}\" eliminado con ¡ÉXITO!", duration=5000, position="top-right")  
+                yield UserInfoState.list_users()
+                yield rx.toast.success(f"Usuario \"{user.name}\" eliminado con ¡ÉXITO!", duration=5000, position="top-right")  
         except Exception as e:
             yield rx.toast.error(f"Error al eliminar el usuario: {str(e)}", duration=5000, position="top-center")  
             print(f"Error al eliminar el usuario: {str(e)}")

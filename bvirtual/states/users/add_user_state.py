@@ -60,21 +60,21 @@ class AddUserState(RegistrationState):
 
         """Validaciones"""
         if form_data['password'] != form_data['confirm_password']:
-            yield rx.toast.error('Las contraseñas no coinciden.', duration=5000, position="top-center",)
-            return
+            return rx.toast.error('Las contraseñas no coinciden.', duration=5000, position="top-center",)
+            
         
         if not form_data['password']:
-            yield rx.toast.error('La contraseña no puede estar vacia', duration=5000, position="top-center",)
-            return
+            return rx.toast.error('La contraseña no puede estar vacia', duration=5000, position="top-center",)
+            
         
         if not self.role_name:
-            yield rx.toast.error("Debe seleccionar un rol.", duration=5000, position="top-center")
-            return
+            return rx.toast.error("Debe seleccionar un rol.", duration=5000, position="top-center")
+            
         
         # Nueva validación de correo electrónico
         if not re.fullmatch(EMAIL_REGEX, self.email):
-            yield rx.toast.error('Por favor, introduce un correo electrónico válido.', duration=5000, position="top-center")
-            return
+            return rx.toast.error('Por favor, introduce un correo electrónico válido.', duration=5000, position="top-center")
+            
 
         
         try:
@@ -116,10 +116,10 @@ class AddUserState(RegistrationState):
                     self.is_admin = False 
                     self.role_name = ""
 
-                """Actualizar la lista de usuarios en UserInfoState"""
-                yield UserInfoState.list_users()
+                    """Actualizar la lista de usuarios en UserInfoState"""
+                    yield UserInfoState.list_users()
 
-            yield rx.toast.success(f"Usuario \"{form_data['name'].title()}\" creado con ¡ÉXITO!", duration=5000, position="top-right")
+                    yield rx.toast.success(f"Usuario \"{form_data['name'].title()}\" creado con ¡ÉXITO!", duration=5000, position="top-right")
             
         
         except Exception as e:
