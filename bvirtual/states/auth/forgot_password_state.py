@@ -49,8 +49,8 @@ class ForgotPasswordState(rx.State):
 
         if not username:
             self.error_message = "Por favor, ingresa tu usuario."
-            yield rx.toast.error(self.error_message, duration="5000", position="top-center")
-            return
+            return rx.toast.error(self.error_message, duration="5000", position="top-center")
+            
         
         with rx.session() as session:
             # 1. Buscar al usuario por el nombre de usuario.
