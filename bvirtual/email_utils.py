@@ -24,7 +24,7 @@ def send_password_reset_email(to_email: str, new_password: str):
     try:
         # Crea el mensaje de correo
         msg = MIMEMultipart("alternative")
-        msg["Subject"] = "Recuperación de Contraseña"
+        msg["Subject"] = "Recuperación de Contraseña ! Biblioteca Virtual"
         msg["From"] = SENDER_EMAIL
         msg["To"] = to_email
 
