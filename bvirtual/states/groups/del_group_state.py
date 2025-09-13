@@ -19,8 +19,8 @@ class DeleteGroupState(rx.State):
                 session.delete(group_to_delete)
                 session.commit()
 
-            yield GroupsState.list_groups()
-            yield rx.toast.success(f"Usuario \"{group.name}\" eliminado con ¡ÉXITO!", duration=5000, position="top-right") 
+                yield GroupsState.list_groups()
+                yield rx.toast.success(f"Usuario \"{group.name}\" eliminado con ¡ÉXITO!", duration=5000, position="top-right") 
 
         except Exception as e:
             yield rx.toast.error(f"Error al eliminar el grupo: {str(e)}", duration=5000, position="top-center")  
