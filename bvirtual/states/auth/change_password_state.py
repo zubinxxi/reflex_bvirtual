@@ -41,15 +41,16 @@ class ChangePassword(reflex_local_auth.LocalAuthState):
         self.new_password = form_data["new_password"]
         self.confirm_password = form_data["confirm_password"]
 
-        # Validar las nuevas contraseñas y capturar el resultado
-        validation_result = self.validate_new_password(self.new_password, self.confirm_password)
-        if validation_result:
-            yield validation_result
-            return
-
         # Lógica para cambiar la contraseña
         try:
             with rx.session() as session:
+
+                # Validar las nuevas contraseñas y capturar el resultado
+                validation_result = self.validate_new_password(self.new_password, self.confirm_password)
+                if validation_result:
+                    yield validation_result
+                    return
+                
                 # Busca el usuario actual en la base de datos
                 current_user = session.exec(
                     select(LocalUser).where(LocalUser.id == self.authenticated_user.id)
