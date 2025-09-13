@@ -6,7 +6,7 @@ from bvirtual.states.groups.edit_group_state import EditGroupState
 # Model
 from bvirtual.models.auth.auth_models import User_Role
 
-def edit_user_button(group: User_Role) -> rx.Component:
+def edit_group_button(group: User_Role) -> rx.Component:
     return rx.dialog.root(
         rx.dialog.trigger(
             rx.button(

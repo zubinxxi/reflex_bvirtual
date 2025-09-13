@@ -9,7 +9,7 @@ from bvirtual.models.auth.auth_models import User_Role
 # componentes
 from bvirtual.components.pagination.pagination import pagination_controls
 from bvirtual.components.groups.btn_add_group import add_group_button
-from bvirtual.components.groups.btn_edit_group import edit_user_button
+from bvirtual.components.groups.btn_edit_group import edit_group_button
 from bvirtual.components.groups.btn_del_group import delete_group_button
 
 def show_groups(index: int, group: User_Role) -> rx.Component:
@@ -22,7 +22,7 @@ def show_groups(index: int, group: User_Role) -> rx.Component:
             rx.hstack(
                 # Aquí puedes agregar botones o acciones específicas para cada grupo
                 rx.tooltip(
-                    edit_user_button(group),
+                    edit_group_button(group),
                     content="Editar Grupo",
                     side="bottom",
                 ),
