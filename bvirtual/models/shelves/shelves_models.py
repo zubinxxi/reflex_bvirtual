@@ -8,4 +8,4 @@ from sqlmodel import Field, Relationship
 class Shelves(rx.Model, table=True):
     description: str = Field(nullable=True)  # Optional description of the category
 
-    documents: List["Documents"]= Relationship(back_populates="shelves")  # Relationship to Documents model
+    documents: List["Documents"]= Relationship(back_populates="shelves")  # type: ignore # Relationship to Documents model
