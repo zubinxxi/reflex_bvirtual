@@ -5,8 +5,8 @@ from sqlalchemy.orm import joinedload # Importar joinedload
 
 # Modelos
 from bvirtual.models.documents.document_models import Documents
-from models.categorys.categorys_models import Categorys
-from models.shelves.shelves_models import Shelves
+from bvirtual.models.categorys.categorys_models import Categorys
+from bvirtual.models.shelves.shelves_models import Shelves
 
 # Clase estado para la pagina de usuarios 
 class DocumentsState(rx.State):
