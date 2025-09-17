@@ -12,7 +12,7 @@ from bvirtual.components.pagination.pagination import pagination_controls
 
 from bvirtual.components.shelves.btn_add_shelve import add_shelve_button
 from bvirtual.components.shelves.btn_edit_shelve import edit_shelve_button
-#from bvirtual.components.categorys.btn_del_category import delete_category_button
+from bvirtual.components.shelves.btn_del_shelve import delete_shelve_button
 
 
 
@@ -29,7 +29,7 @@ def show_shelves(index: int, shelve: Shelves) -> rx.Component:
                     side="bottom",
                 ),
                 rx.tooltip(
-                    #delete_shelve_button(shelve),
+                    delete_shelve_button(shelve),
                     content="Borrar Usuario",
                     side="bottom",
                 ),
