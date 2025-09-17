@@ -45,7 +45,7 @@ class EditCategoryState(rx.State):
                 ).first()
 
                 if is_category_exist:
-                    yield rx.toast.error(f"¡El nombre de la categoría \"{form_data["description"]}\" ya existe!", duration="5000", position="top-center")
+                    yield rx.toast.error(f"¡El nombre de la categoría \"{self.description}\" ya existe!", duration="5000", position="top-center")
                     return
                 
                 # 3. Actualizamos los campos y guardamos los cambios
