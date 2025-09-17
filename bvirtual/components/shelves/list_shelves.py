@@ -11,7 +11,7 @@ from bvirtual.models.shelves.shelves_models import Shelves
 from bvirtual.components.pagination.pagination import pagination_controls
 
 from bvirtual.components.shelves.btn_add_shelve import add_shelve_button
-#from bvirtual.components.categorys.btn_edit_category import edit_category_button
+from bvirtual.components.shelves.btn_edit_shelve import edit_shelve_button
 #from bvirtual.components.categorys.btn_del_category import delete_category_button
 
 
@@ -24,7 +24,7 @@ def show_shelves(index: int, shelve: Shelves) -> rx.Component:
         rx.table.cell(
             rx.hstack(
                 rx.tooltip(
-                    #edit_shelve_button(shelve),
+                    edit_shelve_button(shelve),
                     content="Actualizar Usuario",
                     side="bottom",
                 ),
