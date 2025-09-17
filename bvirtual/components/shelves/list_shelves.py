@@ -74,11 +74,11 @@ def loading_table_shelves() -> rx.Component:
                 #    UserInfoState.users, show_users
                 #)
                 rx.foreach(
-                    ShelvesState.categorys, 
+                    ShelvesState.shelves, 
                     lambda user, index: show_shelves(index, user)
                 )
             ),
-            on_mount=ShelvesState.list_categorys,
+            on_mount=ShelvesState.list_shelves,
             variant="surface",
             size="1",
             margin_top="20px",
