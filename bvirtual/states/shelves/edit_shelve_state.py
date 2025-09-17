@@ -39,16 +39,13 @@ class EditShelveState(rx.State):
                     yield rx.toast.error(f"Error: No se encontró el estante con ID {self.current_shelve.id}.", duration=5000, position="top-center")
                     return
                 
-                # 2. Verificamos si la nueva categoría ya existe
+                # 2. Verificamos si el nuevo estante ya existe
                 is_shelve_exist = session.exec(
-                    select(Shelves).where(
-                        Shelves.description == form_data["description"], 
-                        Shelves.id != self.current_shelve.id  # Excluir el estante actual
-                    )
+                    select(Shelves).where(Shelves.description == form_data["description"]).where(Shelves.id != self.current_shelve.id)  # Excluir el estante actual
                 ).first()
 
                 if is_shelve_exist:
-                    yield rx.toast.error(f'¡El nombre del estante "{form_data["name"]}" ya existe!', duration="5000", position="top-center")
+                    yield rx.toast.error(f"¡El nombre del estante \"{self.description}\" ya existe!", duration="5000", position="top-center")
                     return
                 
                 # 3. Actualizamos los campos y guardamos los cambios
