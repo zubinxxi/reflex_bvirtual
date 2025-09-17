@@ -12,7 +12,7 @@ class EditCategoryState(rx.State):
     description: str
     current_category: Categorys = Categorys()
 
-    #Función que trae los datos de un grupo
+    #Función que trae los datos de una categoría desde el grid
     @rx.event
     def get_category(self, category: Categorys):
         self.current_category = category
@@ -41,14 +41,11 @@ class EditCategoryState(rx.State):
                 
                 # 2. Verificamos si la nueva categoría ya existe
                 is_category_exist = session.exec(
-                    select(Categorys).where(
-                        Categorys.description == form_data["description"], 
-                        Categorys.id != self.current_category.id  # Excluir el grupo actual
-                    )
+                    select(Categorys).where(Categorys.description == form_data["description"]).where(Categorys.id != self.current_category.id)  # Excluir la categoría actual
                 ).first()
 
                 if is_category_exist:
-                    yield rx.toast.error(f'¡El nombre de la categoría "{form_data["name"]}" ya existe!', duration="5000", position="top-center")
+                    yield rx.toast.error(f"¡El nombre de la categoría \"{form_data["name"]}\" ya existe!", duration="5000", position="top-center")
                     return
                 
                 # 3. Actualizamos los campos y guardamos los cambios
