@@ -17,7 +17,7 @@ def shelves() -> rx.Component:
             ),
             width="100%",
         ),
-        #loading_table_users(),
+        #loading_table_shelves(),
         padding_y="20px",
         width="100%",
         
