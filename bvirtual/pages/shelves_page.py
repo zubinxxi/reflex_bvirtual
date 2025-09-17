@@ -3,6 +3,9 @@ import reflex_local_auth
 
 from bvirtual.template import template
 
+# Componets
+from bvirtual.components.shelves.list_shelves import loading_table_shelves
+
 @rx.page(route="/estantes", title="Estantes | Biblioteca Virtual")
 @template
 @reflex_local_auth.require_login
@@ -17,7 +20,7 @@ def shelves() -> rx.Component:
             ),
             width="100%",
         ),
-        #loading_table_shelves(),
+        loading_table_shelves(),
         padding_y="20px",
         width="100%",
         
