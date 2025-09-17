@@ -3,6 +3,8 @@ import reflex_local_auth
 
 from bvirtual.template import template
 
+from bvirtual.components.documents.list_documents import loading_table_documents
+
 @rx.page(route="/documentos", title="Documentos | Biblioteca Virtual")
 @template
 @reflex_local_auth.require_login
@@ -17,7 +19,7 @@ def documents() -> rx.Component:
             ),
             width="100%",
         ),
-        #loading_table_users(),
+        loading_table_documents(),
         padding_y="20px",
         width="100%",
         
