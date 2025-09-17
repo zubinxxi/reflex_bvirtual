@@ -10,7 +10,7 @@ from bvirtual.models.shelves.shelves_models import Shelves
 # paginado
 from bvirtual.components.pagination.pagination import pagination_controls
 
-#from bvirtual.components.categorys.btn_add_category import add_category_button
+from bvirtual.components.shelves.btn_add_shelve import add_shelve_button
 #from bvirtual.components.categorys.btn_edit_category import edit_category_button
 #from bvirtual.components.categorys.btn_del_category import delete_category_button
 
@@ -54,7 +54,7 @@ def loading_table_shelves() -> rx.Component:
                 placeholder="Buscar categoría...",
                 on_change=lambda value: ShelvesState.set_search(value),
             ),
-            #add_shelve_button(),
+            add_shelve_button(),
             direction="row",
             justify="between",
             width="100%",
