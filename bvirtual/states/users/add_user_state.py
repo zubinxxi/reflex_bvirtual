@@ -3,8 +3,12 @@ import re # Importa la librería re para expresiones regulares
 from sqlmodel import select
 from typing import Any, Optional
 #from reflex_local_auth.user import LocalUser
+
+# States
 from reflex_local_auth import RegistrationState
 from bvirtual.states.users.users_state import UserInfoState
+
+# Models
 from bvirtual.models.auth.auth_models import UserInfo, User_Role
 
 class AddUserState(RegistrationState):
