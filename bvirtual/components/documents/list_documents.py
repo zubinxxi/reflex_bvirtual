@@ -58,6 +58,20 @@ def loading_table_documents() -> rx.Component:
                 on_change=lambda value: DocumentsState.set_search(value),
             ),
             #add_document_button(),
+            rx.button(
+                rx.tooltip(
+                    rx.hstack(
+                        rx.icon("plus", size=18),
+                        rx.text("Nuevo", size="4"),
+                        align="center",
+                        justify="center",
+                    ),
+                    content="Agregar Documento",
+                ),
+                color_scheme="cyan",
+                variant="surface",
+                on_click=rx.redirect('/agregar-documento')
+            ),
             direction="row",
             justify="between",
             width="100%",
