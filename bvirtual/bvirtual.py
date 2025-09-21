@@ -25,6 +25,7 @@ from bvirtual.pages.change_password_page import change_password
 from bvirtual.pages.categorys_page import categorys
 from bvirtual.pages.shelves_page import shelves
 from bvirtual.pages.documents_page import documents
+from bvirtual.pages.add_document_page import add_document
 
 class State(rx.State):
     """The app state."""
