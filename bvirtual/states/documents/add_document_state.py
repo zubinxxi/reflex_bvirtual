@@ -2,19 +2,17 @@ from os import remove
 import pathlib
 import reflex as rx
 from sqlmodel import select
-from typing import Any, Optional
-
-# States
-from bvirtual.states.state import UploadDocumentState
-#from bvirtual.states.documents.documents_state import DocumentsState
 
 # Models 
 from bvirtual.models.documents.document_models import Documents
 from bvirtual.models.categorys.categorys_models import Categorys
 from bvirtual.models.shelves.shelves_models import Shelves
 
-class AddDocumentState(UploadDocumentState):
+class AddDocumentState(rx.State):
 
+    document_name: str
+    uploading: bool = False
+    outfile: pathlib.PosixPath = ""
     category_name: str # Nombre de la categoría seleccionada
     shelve_name: str # Nombre del estante seleccionado
 
@@ -47,6 +45,29 @@ class AddDocumentState(UploadDocumentState):
     def set_shelve_name(self, shelve: str):
         self.shelve_name = shelve
 
+    # Evento que sube el documento a un directorio dentro del proyecto
+    @rx.event
+    async def handle_upload(self, files: list[rx.UploadFile]):
+        current_file = files[0] # Archivo que va a subir
+        upload_data = await current_file.read() # Lectura del archivo que se va a subir
+        self.outfile = rx.get_upload_dir() / current_file.filename # Ruta donde se guardará el archivo 
+        #self.uploading = True # Activa el check
+
+        # Guardar el archivo.
+        with self.outfile.open("wb") as file_object:
+            file_object.write(upload_data) # Pasamos el archivo leido para ser escrito en la carpeta a guardar
+
+            # Actualizar la variable document_name.
+            self.document_name = current_file.filename
+            self.uploading = True
+
+    @rx.event
+    def cancel_upload(self):
+        self.uploading = False
+        if self.outfile:
+            remove(self.outfile)
+        return rx.cancel_upload("upload1")
+
     # Evento que trae los datos del formulario y los guarda en el modelo
     @rx.event
     def add_document(self):
@@ -65,7 +86,6 @@ class AddDocumentState(UploadDocumentState):
             return
         else:
             self.error_field_shelve = ""
-
 
         try:
             with rx.session() as session:
@@ -92,7 +112,7 @@ class AddDocumentState(UploadDocumentState):
                 self.document_name = ""
                 self.uploading = False
                 #yield DocumentsState.list_documents()
-                yield rx.toast.success(f"Documento \"{UploadDocumentState.document_name}\" creado con ¡ÉXITO!", duration=5000, position="top-right")
+                yield rx.toast.success(f"Documento \"{self.document_name}\" creado con ¡ÉXITO!", duration=5000, position="top-right")
 
         except Exception as e:
             self.registration_error = str(e)
