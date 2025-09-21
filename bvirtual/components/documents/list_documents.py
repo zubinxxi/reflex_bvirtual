@@ -21,8 +21,8 @@ def show_documents(index: int, documents: Documents) -> rx.Component:
     
     return rx.table.row(
         rx.table.cell(index + 1, align="center"),
-        rx.table.cell(documents.id_categorys),
-        rx.table.cell(documents.id_shelves),
+        rx.table.cell(documents.categorys.description),
+        rx.table.cell(documents.shelves.description),
         rx.table.cell(documents.name),
         rx.table.cell(
             rx.hstack(
