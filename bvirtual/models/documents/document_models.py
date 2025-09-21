@@ -3,8 +3,8 @@ from typing import Optional, List
 from sqlmodel import Field, Relationship 
 
 # No importa Categorys y Shelves aquí
-#from bvirtual.models.categorys.categorys_models import Categorys
-#from bvirtual.models.shelves.shelves_models import Shelves
+from bvirtual.models.categorys.categorys_models import Categorys
+from bvirtual.models.shelves.shelves_models import Shelves
 
 class Documents(rx.Model, table=True):
     name: str = Field(nullable=True)
