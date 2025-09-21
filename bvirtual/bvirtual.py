@@ -6,16 +6,15 @@ import reflex_local_auth
 from rxconfig import config
 
 # Models
+"""Se importan los modelos para que 'reflex db init' los reconozca"""
 from bvirtual.models.auth import auth_models
 from bvirtual.models.auth.auth_models import UserInfo
 from bvirtual.models.categorys.categorys_models import Categorys
 from bvirtual.models.shelves.shelves_models import Shelves
 from bvirtual.models.documents.document_models import Documents
 
-# State
-#from biblioteca.state import MyLocalAuthState
-
 # Pages
+"""Se importan todas las páginas del sistema para que sean reconocidas por el router"""
 from bvirtual.pages.index import index
 from bvirtual.pages.login_page import login
 from bvirtual.pages.forgot_password_page import forgot_password
@@ -30,8 +29,6 @@ from bvirtual.pages.add_document_page import add_document
 class State(rx.State):
     """The app state."""
 
-
-        
 
 app = rx.App(
     theme=rx.theme( 
