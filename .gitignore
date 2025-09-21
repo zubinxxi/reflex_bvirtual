@@ -20,3 +20,5 @@ Thumbs.db
 # Archivos de log
 *.log
 
+# Archivos subidos
+uploaded_files/
