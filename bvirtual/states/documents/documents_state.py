@@ -1,6 +1,6 @@
 import reflex as rx
 #import reflex_local_auth
-from sqlmodel import select, or_, func
+from sqlmodel import desc, select, or_, func
 from sqlalchemy.orm import joinedload # Importar joinedload
 
 # Modelos
@@ -73,7 +73,7 @@ class DocumentsState(rx.State):
         """Get documents from the database."""
         with rx.session() as session:
             # Primero, Construir la consulta base, uniendo las tablas
-            query = select(Documents).join(Categorys).join(Shelves)
+            query = select(Documents).join(Categorys).join(Shelves).order_by(desc(Documents.id))
             # Construir la consulta base con joinedload
             query = query.options(
                 joinedload(Documents.categorys),

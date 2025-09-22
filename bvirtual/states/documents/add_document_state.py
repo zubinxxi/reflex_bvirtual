@@ -22,7 +22,7 @@ class AddDocumentState(rx.State):
     # Mensajes de estado
     registration_error: str = ""
     success_message: str = ""
-    #error_field_name: str = ""
+    error_field_filename: str = ""
     error_field_category: str = ""
     error_field_shelve: str = ""
 
@@ -48,26 +48,46 @@ class AddDocumentState(rx.State):
     # Evento que sube el documento a un directorio dentro del proyecto
     @rx.event
     async def handle_upload(self, files: list[rx.UploadFile]):
-        current_file = files[0] # Archivo que va a subir
-        upload_data = await current_file.read() # Lectura del archivo que se va a subir
-        self.outfile = rx.get_upload_dir() / current_file.filename # Ruta donde se guardará el archivo 
-        #self.uploading = True # Activa el check
 
-        # Guardar el archivo.
-        with self.outfile.open("wb") as file_object:
-            file_object.write(upload_data) # Pasamos el archivo leido para ser escrito en la carpeta a guardar
+        if not files:
+            self.error_field_filename = "Debe seleccionar un documento"
+            return
+        else:
+            self.error_field_filename = ""
 
-            # Actualizar la variable document_name.
-            self.document_name = current_file.filename
-            self.uploading = True
+            current_file = files[0] # Archivo que va a subir
+            
+
+            upload_data = await current_file.read() # Lectura del archivo que se va a subir
+            self.outfile = rx.get_upload_dir() / current_file.filename # Ruta donde se guardará el archivo 
+            #self.uploading = True # Activa el check
+
+            # Guardar el archivo.
+            with self.outfile.open("wb") as file_object:
+                file_object.write(upload_data) # Pasamos el archivo leido para ser escrito en la carpeta a guardar
+
+                # Actualizar la variable document_name.
+                self.document_name = current_file.filename
+                self.uploading = True
 
     @rx.event
     def cancel_upload(self):
-        self.uploading = False
-        if self.outfile:
-            remove(self.outfile)
-        return rx.cancel_upload("upload1")
 
+        if self.outfile and self.document_name:
+            remove(self.outfile)
+
+        self.document_name = ""
+        self.uploading = False
+        self.category_name = ""
+        self.shelve_name = ""
+        self.error_field_category = ""
+        self.error_field_shelve = ""
+        self.error_field_filename = ""
+        self.registration_error = ""
+        self.success_message = ""
+
+        return rx.cancel_upload("upload1")
+    
     # Evento que trae los datos del formulario y los guarda en el modelo
     @rx.event
     def add_document(self):
@@ -77,6 +97,7 @@ class AddDocumentState(rx.State):
 
         if not self.category_name:
             self.error_field_category = "Debe seleccionar una categoría"
+            print(self.error_field_category)
             return
         else:
             self.error_field_category = ""
@@ -86,6 +107,14 @@ class AddDocumentState(rx.State):
             return
         else:
             self.error_field_shelve = ""
+
+        if not self.outfile or not self.document_name:
+            self.error_field_filename = "Debe cargar el documento"
+            return
+        else:
+            self.error_field_filename = ""
+
+        
 
         try:
             with rx.session() as session:
@@ -111,8 +140,11 @@ class AddDocumentState(rx.State):
 
                 self.document_name = ""
                 self.uploading = False
+                self.category_name = ""
+                self.shelve_name = ""
                 #yield DocumentsState.list_documents()
                 yield rx.toast.success(f"Documento \"{self.document_name}\" creado con ¡ÉXITO!", duration=5000, position="top-right")
+                return rx.redirect('/documentos')
 
         except Exception as e:
             self.registration_error = str(e)

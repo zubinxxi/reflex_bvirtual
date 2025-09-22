@@ -12,32 +12,6 @@ color = "rgb(107,99,246)"
 def upload_document(label: str) -> rx.Component:
     return rx.vstack(
         rx.text(label),
-        rx.upload(
-            rx.vstack(
-                rx.button(
-                    "Seleccione el archivo",
-                    color="#424242",
-                    bg="white",
-                    border=f"1px solid {rx.color('cyan')}",
-                ),
-                rx.text(
-                    "Arrastre y suelte archivos aquí o haga clic para seleccionar archivos"
-                ),
-            ),
-            id="upload1",
-            accept={
-                "application/pdf": [".pdf"],
-                #"image/png": [".png"],
-                #"image/jpeg": [".jpg", ".jpeg"],
-                #"image/gif": [".gif"],
-                #"image/webp": [".webp"],
-                #"text/html": [".html", ".htm"],
-            },
-            max_files=1,
-            border=f"1px dotted {rx.color('cyan')}",
-            padding="5em",
-            width="100%",
-        ),
         rx.hstack(
             rx.button(
                 "Cargar",
@@ -66,9 +40,41 @@ def upload_document(label: str) -> rx.Component:
             align="center",
             width="100%"
         ),
+        rx.upload(
+            rx.vstack(
+                rx.button(
+                    "Seleccione el archivo",
+                    color="#424242",
+                    bg="white",
+                    border=f"1px solid {rx.color('cyan')}",
+                ),
+                rx.text(
+                    "Arrastre y suelte archivos aquí o haga clic para seleccionar archivos"
+                ),
+            ),
+            id="upload1",
+            accept={
+                "application/pdf": [".pdf"],
+                #"image/png": [".png"],
+                #"image/jpeg": [".jpg", ".jpeg"],
+                #"image/gif": [".gif"],
+                #"image/webp": [".webp"],
+                #"text/html": [".html", ".htm"],
+            },
+            max_files=1,
+            border=f"1px dotted {rx.color('cyan')}",
+            padding="5em",
+            width="100%",
+        ),
+        rx.cond(
+            AddDocumentState.error_field_filename,
+            rx.text(AddDocumentState.error_field_filename, color="tomato")                        
+        ),
+        
         width="100%",
         justify="center",
         align="start",
+        on_mount=rx.clear_selected_files("upload1")
     ),
 
 def form_add_document():
@@ -82,13 +88,16 @@ def form_add_document():
                         color_scheme="cyan",
                         on_click=AddDocumentState.add_document
                     ),
-                    href="/documentos",
+                    #href="/documentos",
                 ),
                 
-                rx.button(
-                    "Cancelar",
-                    color_scheme="red",
-                    #on_click=CountState.decrement,
+                rx.link(
+                    rx.button(
+                        "Calcelar", 
+                        color_scheme="tomato",
+                        on_click=AddDocumentState.cancel_upload
+                    ),
+                    href="/documentos",
                 ),
 
 
@@ -112,6 +121,10 @@ def form_add_document():
                             on_change=AddDocumentState.set_category_name,
                             width="100%",
                         ),
+                        rx.cond(
+                            AddDocumentState.error_field_category,
+                            rx.text(AddDocumentState.error_field_category, color="tomato")                        
+                        ),
                         width="50%",
                     ),
                     
@@ -124,6 +137,10 @@ def form_add_document():
                             default_value=AddDocumentState.shelve_name,
                             on_change=AddDocumentState.set_shelve_name,
                             width="100%",
+                        ),
+                        rx.cond(
+                            AddDocumentState.error_field_shelve,
+                            rx.text(AddDocumentState.error_field_shelve, color="tomato")                        
                         ),
                         width="50%",
                     ),
