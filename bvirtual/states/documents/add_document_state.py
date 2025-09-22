@@ -118,6 +118,16 @@ class AddDocumentState(rx.State):
 
         try:
             with rx.session() as session:
+                """Validación de existencia del documento en el sistema"""
+                is_document_exist = session.exec(
+                    select(Documents).where(Documents.name == self.document_name)
+                ).first()
+
+                if is_document_exist:
+                    self.error_field_filename = "El documento ya existe en el sistema"
+                    return
+                else:
+                    self.error_field_filename = ""
 
                 # Obtener el ID de la categoría a partir del nombre
                 selected_category = session.exec(

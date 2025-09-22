@@ -13,8 +13,7 @@ from bvirtual.components.pagination.pagination import pagination_controls
 
 #from bvirtual.components.categorys.btn_add_category import add_category_button
 #from bvirtual.components.categorys.btn_edit_category import edit_category_button
-#from bvirtual.components.categorys.btn_del_category import delete_category_button
-
+from bvirtual.components.documents.btn_del_document import delete_document_button
 
 
 def show_documents(index: int, documents: Documents) -> rx.Component:
@@ -32,7 +31,7 @@ def show_documents(index: int, documents: Documents) -> rx.Component:
                     side="bottom",
                 ),
                 rx.tooltip(
-                    #delete_documento_button(documents),
+                    delete_document_button(documents),
                     content="Borrar Documento",
                     side="bottom",
                 ),

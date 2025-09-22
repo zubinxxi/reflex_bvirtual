@@ -31,7 +31,9 @@ def upload_document(label: str) -> rx.Component:
                 AddDocumentState.uploading,
                 rx.hstack(
                     rx.text(rx.selected_files("upload1")),
-                    rx.icon("circle-check", color="green")
+                    rx.icon("circle-check", color="green"),
+                    justify="between",
+                    align="center",
                 ),
                 rx.text(rx.selected_files("upload1")),
             ),
@@ -68,7 +70,15 @@ def upload_document(label: str) -> rx.Component:
         ),
         rx.cond(
             AddDocumentState.error_field_filename,
-            rx.text(AddDocumentState.error_field_filename, color="tomato")                        
+            rx.text(
+                rx.hstack(
+                    rx.icon("circle-x", color="tomato"),
+                    AddDocumentState.error_field_filename,
+                    justify="between",
+                    align="center",
+                ), 
+                color="tomato",
+            ),
         ),
         
         width="100%",
@@ -123,7 +133,15 @@ def form_add_document():
                         ),
                         rx.cond(
                             AddDocumentState.error_field_category,
-                            rx.text(AddDocumentState.error_field_category, color="tomato")                        
+                            rx.text(
+                                rx.hstack(
+                                    rx.icon("circle-x", color="tomato"),
+                                    AddDocumentState.error_field_category,
+                                    justify="between",
+                                    align="center",
+                                ),
+                                color="tomato",
+                            )                        
                         ),
                         width="50%",
                     ),
@@ -140,7 +158,15 @@ def form_add_document():
                         ),
                         rx.cond(
                             AddDocumentState.error_field_shelve,
-                            rx.text(AddDocumentState.error_field_shelve, color="tomato")                        
+                            rx.text(
+                                rx.hstack(
+                                    rx.icon("circle-x", color="tomato"),
+                                    AddDocumentState.error_field_shelve,
+                                    justify="between",
+                                    align="center",
+                                ), 
+                                color="tomato",
+                            ),                        
                         ),
                         width="50%",
                     ),
