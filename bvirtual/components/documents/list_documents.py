@@ -16,6 +16,11 @@ from bvirtual.components.pagination.pagination import pagination_controls
 from bvirtual.components.documents.btn_del_document import delete_document_button
 
 
+def view_pdf(pdf:str) -> rx.Component:
+
+    pass
+
+
 def show_documents(index: int, documents: Documents) -> rx.Component:
     
     return rx.table.row(
@@ -23,6 +28,47 @@ def show_documents(index: int, documents: Documents) -> rx.Component:
         rx.table.cell(documents.categorys.description),
         rx.table.cell(documents.shelves.description),
         rx.table.cell(documents.name),
+        rx.table.cell(
+            rx.dialog.root(
+                rx.dialog.trigger(
+                    rx.button(
+                        rx.tooltip(
+                            rx.icon(
+                                "file-text",
+                                size=20,
+                                color="tomato",
+                            ),
+                            content="Ver PDF",
+                        ),
+                        color_scheme="tomato",
+                        variant="ghost",
+                    ),
+                ),
+
+                rx.dialog.content(
+                    rx.dialog.title(
+                        documents.name,
+                    ),
+
+                    rx.html(
+                        f"""
+                        <iframe 
+                            src="{rx.get_upload_url(documents.name)}" 
+                            width="100%" 
+                            height="800px"
+                            style="border: 1px solid #e0e0e0; border-radius: 8px;"
+                        >
+                        </iframe>
+                        """,
+                        width="100%",
+                    ),
+
+                    max_width="700px",
+                    height="900px",
+                ),
+            ),
+            align="center"
+        ),
         rx.table.cell(
             rx.hstack(
                 rx.tooltip(
@@ -83,6 +129,7 @@ def loading_table_documents() -> rx.Component:
                     rx.table.column_header_cell("Categoría"),
                     rx.table.column_header_cell("Estante"),
                     rx.table.column_header_cell("Documento"),
+                    rx.table.column_header_cell("Ver", align="center"),
                     rx.table.column_header_cell("Acciones", align="center"),
 
                 ),
