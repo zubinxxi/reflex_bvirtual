@@ -60,7 +60,7 @@ def sidebar_item(
 def sidebar_items() -> rx.Component:
     return rx.vstack(
         sidebar_item("Dashboard", "layout-dashboard", "/panel"),
-        sidebar_item("Documentos", "library", "/#"),
+        sidebar_item("Documentos", "library", "/documentos"),
         rx.accordion.root(
             rx.accordion.item(
                 header=rx.hstack(
@@ -78,13 +78,6 @@ def sidebar_items() -> rx.Component:
                     rx.link(
                         rx.hstack(rx.icon("square-library"), rx.text("Estantes"), align="center", justify="start"),
                         href="/estantes",    
-                        underline="none",
-                        trim="both",
-                        width="100%",
-                    ),
-                    rx.link(
-                        rx.hstack(rx.icon("files"), rx.text("Documentos"), align="center", justify="start"),
-                        href="/documentos",    
                         underline="none",
                         trim="both",
                         width="100%",
@@ -111,20 +104,27 @@ def settings_items() -> rx.Component:
                 rx.text('Ajustes', size="4"),
             ),
             content=rx.vstack(
-                rx.link(
-                    rx.hstack(rx.icon("user"), rx.text("Usuarios"), align="center", justify="start"),
-                    href="/usuarios",    
-                    underline="none",
-                    trim="both",
-                    width="100%",                        
+                rx.cond(
+                    MyLocalAuthState.authenticated_user_info.is_admin,
+                    rx.link(
+                        rx.hstack(rx.icon("user"), rx.text("Usuarios"), align="center", justify="start"),
+                        href="/usuarios",    
+                        underline="none",
+                        trim="both",
+                        width="100%",                        
+                    ),
                 ),
-                rx.link(
-                    rx.hstack(rx.icon("users"), rx.text("Grupos"), align="center", justify="start"),
-                    href="/grupos",    
-                    underline="none",
-                    trim="both",
-                    width="100%",
+                rx.cond(
+                    MyLocalAuthState.authenticated_user_info.is_admin,
+                    rx.link(
+                        rx.hstack(rx.icon("users"), rx.text("Grupos"), align="center", justify="start"),
+                        href="/grupos",    
+                        underline="none",
+                        trim="both",
+                        width="100%",
+                    ),
                 ),
+                
                 rx.link(
                     rx.hstack(rx.icon("key-round"), rx.text("Cambiar Contraseña"), align="center", justify="start"),
                     href="/cambiar-password",    
@@ -155,22 +155,18 @@ def sidebar() -> rx.Component:
                             border_radius="5px",
                         ),
                         href="/",
+                        cursor="pointer",
                     ),
                     align="center",
                     justify="start",
                     padding_x="0.5rem",
                     width="100%",
-                    
                 ),
                 sidebar_items(),
                 rx.spacer(),
                 rx.vstack(
                     rx.vstack(
-                        rx.cond(
-                            MyLocalAuthState.authenticated_user_info.is_admin,
-                            settings_items(),
-                            rx.text(''),
-                        ),
+                        settings_items(),
                         sidebar_item_logout(),
                         spacing="1",
                         width="100%",
