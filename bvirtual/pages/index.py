@@ -6,11 +6,15 @@ from bvirtual.template import template
 # State
 from bvirtual.states.state import MyLocalAuthState
 
-@rx.page(route="/", title="Dashboard | Biblioteca Virtual")
-@template
-@reflex_local_auth.require_login
+# Components
+from bvirtual.components.index.navbar import navbar_buttons
+
+@rx.page(route="/", title="Inicio | Biblioteca Virtual")
+#@template
+#@reflex_local_auth.require_login
 def index() -> rx.Component:
     return rx.box(
+        navbar_buttons(),
         rx.vstack(
             rx.heading(
                 "Dashboard", 
@@ -49,6 +53,6 @@ def index() -> rx.Component:
                 min_height="50vh",
             ),
         ),
-        padding_y="20px",
+        #padding_y="20px",
         
     )
