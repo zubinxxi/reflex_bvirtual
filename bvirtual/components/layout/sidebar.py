@@ -59,7 +59,7 @@ def sidebar_item(
 
 def sidebar_items() -> rx.Component:
     return rx.vstack(
-        sidebar_item("Dashboard", "layout-dashboard", "/"),
+        sidebar_item("Dashboard", "layout-dashboard", "/panel"),
         sidebar_item("Documentos", "library", "/#"),
         rx.accordion.root(
             rx.accordion.item(
@@ -147,11 +147,14 @@ def sidebar() -> rx.Component:
         rx.desktop_only(
             rx.vstack(
                 rx.hstack(
-                    rx.image(
-                        src="/img/logo01.png",
-                        width="100%",
-                        height="auto",
-                        border_radius="5px",
+                    rx.link(
+                        rx.image(
+                            src="/img/logo01.png",
+                            width="100%",
+                            height="auto",
+                            border_radius="5px",
+                        ),
+                        href="/",
                     ),
                     align="center",
                     justify="start",
