@@ -17,6 +17,7 @@ from bvirtual.models.documents.document_models import Documents
 """Se importan todas las páginas del sistema para que sean reconocidas por el router"""
 from bvirtual.pages.index import index
 from bvirtual.pages.login_page import login
+from bvirtual.pages.dashboard_page import dashboard
 from bvirtual.pages.forgot_password_page import forgot_password
 from bvirtual.pages.users_page import users    
 from bvirtual.pages.groups_page import grupos   
