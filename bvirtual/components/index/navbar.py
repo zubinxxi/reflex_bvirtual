@@ -3,6 +3,7 @@ from reflex.style import set_color_mode, color_mode
 
 # State
 from bvirtual.states.state import MyLocalAuthState
+from bvirtual.states.state import MenuItemsStates
 #from reflex_local_auth import LocalAuthState
 
 def dark_mode_toggle() -> rx.Component:
@@ -47,6 +48,30 @@ def navbar_buttons() -> rx.Component:
                 ),
                 rx.hstack(
                     navbar_link("Inicio", "/"),
+                    rx.menu.root(
+                        rx.menu.trigger(
+                            rx.button(
+                                rx.text(
+                                    "Categorías",
+                                    size="4",
+                                    weight="medium",
+                                ),
+                                rx.icon("chevron-down"),
+                                weight="medium",
+                                variant="ghost",
+                                size="3",
+                            ),
+                        ),
+                        rx.menu.content(
+                            rx.foreach(
+                                    MenuItemsStates.categorys,
+                                    lambda category:rx.menu.item(
+                                        category.description,
+                                    ),
+                                ),
+                            
+                        ),
+                    ),
                     navbar_link("Acerca de", "/#"),
                     navbar_link("Contacto", "/#"),
                     spacing="5",

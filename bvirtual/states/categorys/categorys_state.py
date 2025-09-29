@@ -66,7 +66,7 @@ class CategorysState(rx.State):
         self.offset = 0  # Reset to the first page
         self.list_categorys()
 
-    # Listar Usuarios
+    # Listar Categorías
     @rx.event
     def list_categorys(self):
         """Get users from the database."""
