@@ -130,11 +130,8 @@ def navbar_buttons() -> rx.Component:
                         src="/img/logo01.png",
                         width="12em",
                         height="auto",
-                        #border_radius="25%",
                     ),
-                    #rx.heading(
-                    #    "Reflex", size="6", weight="bold"
-                    #),
+                    dark_mode_toggle(),
                     align_items="center",
                 ),
                 rx.menu.root(
@@ -144,11 +141,9 @@ def navbar_buttons() -> rx.Component:
                     rx.menu.content(
                         rx.menu.item("Inicio"),
                         rx.menu.item("About"),
-                        #rx.menu.item("Pricing"),
                         rx.menu.item("Contact"),
                         rx.menu.separator(),
                         rx.menu.item("Log in"),
-                        #rx.menu.item("Sign up"),
                     ),
                     justify="end",
                 ),
@@ -158,8 +153,8 @@ def navbar_buttons() -> rx.Component:
         ),
         bg=rx.color("accent", 3),
         padding="1em",
-        # position="fixed",
-        # top="0px",
-        # z_index="5",
+        position="fixed",
+        top="0px",
+        z_index="5",
         width="100%",
     )

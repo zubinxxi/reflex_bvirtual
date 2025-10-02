@@ -24,6 +24,7 @@ class MyLocalAuthState(reflex_local_auth.LocalAuthState):
 class MenuItemsStates(rx.State):
     categorys: list[Categorys] = []
     shelves: list[Shelves] = []
+    today: str= ''
 
     # Listar Categorías y estantes
     @rx.event
