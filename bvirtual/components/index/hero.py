@@ -35,8 +35,8 @@ def hero() -> rx.Component:
                 background_position="center",
                 background_repeat="no-repeat",
                 width="100%",
-                height="90vh",
-                padding="2em",
+                height="60vh",
+                #padding="2em",
                 align="center",
                 justify="center",
                 
