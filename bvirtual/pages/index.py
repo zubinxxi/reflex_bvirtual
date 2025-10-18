@@ -10,6 +10,7 @@ from bvirtual.states.state import MenuItemsStates
 # Components
 from bvirtual.components.index.navbar import navbar_buttons
 from bvirtual.components.index.hero import hero
+from bvirtual.components.index.menu_category import menu_category
 from bvirtual.components.index.footer import footer
 
 
@@ -23,6 +24,7 @@ from bvirtual.components.index.footer import footer
 def index() -> rx.Component:
     return rx.box(
         hero(),
+        menu_category(),
         footer(),
         
     )
