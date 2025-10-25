@@ -50,7 +50,7 @@ class IndexState(rx.State):
     #Paginado
     total_items: int
     offset: int = 0
-    limit: int = 10  # Número de grupos por página
+    limit: int = 8  # Número de documentos por página
         
     
     # Función para manejar la búsqueda
@@ -117,6 +117,7 @@ class IndexState(rx.State):
     @rx.event
     def set_category_name(self, category:str):
         self.category_name = category
+        
 
     @rx.event
     def set_shelve_name(self, shelve: str):
@@ -136,7 +137,7 @@ class IndexState(rx.State):
             )
             
             # Aplicar la lógica de búsqueda si existe un término
-            if self.search:
+            if self.search or self.category_name or self.shelve_name:
                 query = query.where(
                     or_(
                         Documents.name.contains(self.search),
