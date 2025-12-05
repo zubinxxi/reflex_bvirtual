@@ -137,15 +137,23 @@ class IndexState(rx.State):
             )
             
             # Aplicar la lógica de búsqueda si existe un término
-            if self.search or self.category_name or self.shelve_name:
+            if self.search:
                 query = query.where(
-                    or_(
-                        Documents.name.contains(self.search),
-                        Categorys.description.contains(self.category_name),
-                        Shelves.description.contains(self.shelve_name),
-                    ),
+                    Documents.name.contains(self.search),
                 )
                 self.documents = session.exec(query).all()[::-1]
+            elif self.category_name:
+                query = query.where(
+                    Categorys.description.contains(self.category_name),
+                )
+                self.documents = session.exec(query).all()[::-1]
+
+            elif self.shelve_name: 
+                query = query.where(
+                        Shelves.description.contains(self.shelve_name),
+                )
+                self.documents = session.exec(query).all()[::-1]
+            
             else:
                 # Si no hay búsqueda, aplicar paginación
                 self._get_total_items() # Se debe llamar aquí para tener el total antes de la paginación
