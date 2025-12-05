@@ -48,6 +48,7 @@ def show_documents(index: int, documents: Documents) -> rx.Component:
                 rx.dialog.content(
                     rx.dialog.title(
                         documents.name,
+                        #rx.get_upload_url(documents.name)
                     ),
 
                     rx.html(
