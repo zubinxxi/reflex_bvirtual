@@ -33,7 +33,7 @@ def document_section() -> rx.Component:
                 rx.select(
                     items=IndexState.all_category_names,
                     placeholder="Seleccionar",
-                    default_value=IndexState.category_name,
+                    #default_value=IndexState.category_name,
                     on_change=IndexState.set_category_name,
                     width="100%",
                 ),
@@ -97,7 +97,6 @@ def document_section() -> rx.Component:
                                     max_width="700px",
                                     height="900px",
                                 ),
-                                
                             ),
                     ),
                     columns="3",
