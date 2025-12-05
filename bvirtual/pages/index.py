@@ -27,6 +27,7 @@ def index() -> rx.Component:
     return rx.box(
         hero(),
         document_section(),
+        rx.separator(margin_bottom="30px"),
         footer(),
         
     )
